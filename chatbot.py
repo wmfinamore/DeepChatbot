@@ -22,3 +22,11 @@ for linha in linhas:
     if len(_linha) == 5:
         # print(_linha[4])
         id_para_linha[_linha[0]] = _linha[4]
+        
+# Criação de uma lista com todas as conversas
+conversas_id = []
+for conversa in conversas[:-1]:
+    # print(conversa)
+    _conversa = conversa.split(' +++$+++ ')[-1][1:-1].replace("'", "").replace(" ", "")
+    # print(_conversa)
+    conversas_id.append(_conversa.split(','))
