@@ -9,6 +9,7 @@ import time
 # ---Parte 1 - pré-processamento dos dados -----
 
 # Importação das bases de dados
+# Fonte: https://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html
 
 linhas = open('dataset/movie_lines.txt', encoding=('utf-8'), errors=('ignore')).read().split('\n')
 conversas = open('dataset/movie_conversations.txt', encoding=('utf-8'), errors=('ignore')).read().split('\n')
@@ -30,3 +31,5 @@ for conversa in conversas[:-1]:
     _conversa = conversa.split(' +++$+++ ')[-1][1:-1].replace("'", "").replace(" ", "")
     # print(_conversa)
     conversas_id.append(_conversa.split(','))
+    
+# Separação das perguntas e respostas
