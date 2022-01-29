@@ -49,8 +49,45 @@ def limpa_texto(texto):
     texto = re.sub(r"he's", "he is", texto)
     texto = re.sub(r"she's", "she is", texto)
     texto = re.sub(r"that´s", "that is", texto)
+    texto = re.sub(r"what's", "what is", texto)
+    texto = re.sub(r"where's", "where is", texto)
+    texto = re.sub(r"/'ll", "will", texto)
+    texto = re.sub(r"/'ve", "have", texto)
+    texto = re.sub(r"/'re", "are", texto)
+    texto = re.sub(r"/'d", "would", texto)
+    texto = re.sub(r"won't", "will not", texto)
+    texto = re.sub(r"cant't", "can not", texto)
+    texto = re.sub(r"[-()#/@;:<>{}~+=?.|,*]", "", texto)
     return texto
     
-limpa_texto("Exemplo i'm")
+limpa_texto("Exemplo i'm**")
+
+# Limpeza de perguntas
+perguntas_limpas = []
+for pergunta in perguntas:
+    perguntas_limpas.append(limpa_texto(pergunta))
+
+# limpeza das respostas
+respostas_limpas = []
+for resposta in respostas:
+    respostas_limpas.append(limpa_texto(resposta))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
