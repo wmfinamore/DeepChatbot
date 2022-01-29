@@ -107,6 +107,26 @@ for resposta in respostas_limpas:
         else:
             palavras_contagem[palavra] += 1
 
+# Remoção de palavras não frequentes e tokenização (dois dicionários)
+# recomendação é retirar as palavras 5% menos frequentes
+limite = 20
+perguntas_palavras_int = {}
+numero_palavra = 0
+for  palavra, contagem in palavras_contagem.items():
+    if contagem >= limite:
+        perguntas_palavras_int[palavra] = numero_palavra
+        numero_palavra += 1
+        
+respostas_palavras_int = {}
+numero_palavra = 0
+for  palavra, contagem in palavras_contagem.items():
+    if contagem >= limite:
+        respostas_palavras_int[palavra] = numero_palavra
+        numero_palavra += 1
+
+
+    
+
 
 
 
