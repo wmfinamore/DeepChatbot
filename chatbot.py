@@ -33,3 +33,24 @@ for conversa in conversas[:-1]:
     conversas_id.append(_conversa.split(','))
     
 # Separação das perguntas e respostas
+perguntas = []
+respostas = []
+for conversa in conversas_id:
+    #print(conversa)
+    #print('******************')
+    for i in range(len(conversa)-1):
+        #print(i)
+        perguntas.append(id_para_linha[conversa[i]])
+        respostas.append(id_para_linha[conversa[i+1]])
+        
+def limpa_texto(texto):
+    texto = texto.lower()
+    texto = re.sub(r"i'm", "i am", texto)
+    texto = re.sub(r"he's", "he is", texto)
+    texto = re.sub(r"she's", "she is", texto)
+    texto = re.sub(r"that´s", "that is", texto)
+    return texto
+    
+limpa_texto("Exemplo i'm")
+
+        
