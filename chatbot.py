@@ -161,6 +161,19 @@ for resposta in respostas_limpas:
             ints.append(respostas_palavras_int[palavra])
     respostas_para_int.append(ints)
 
+# Ordenação das perguntas e respostas pelo tamanho das perguntas
+perguntas_limpas_ordenadas = []
+respostas_limpas_ordenadas = []
+for tamanho in range(1, 25 + 1):
+    # print(tamanho)
+    for i in enumerate(perguntas_para_int):
+        # print(i[1])
+        if len(i[1]) == tamanho:
+            perguntas_limpas_ordenadas.append(perguntas_para_int[i[0]])
+            respostas_limpas_ordenadas.append(respostas_para_int[i[0]])
+
+
+    
 
 
     
