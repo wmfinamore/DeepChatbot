@@ -139,6 +139,27 @@ respostas_int_palavras = {p_i: p for p, p_i in respostas_palavras_int.items()}
 for i in range(len(respostas_limpas)):
     respostas_limpas[i] +=' <EOS>'
 
+# Tradução de todas as perguntas e respotas para inteiros
+# Substituição das palavras menos frequentes por <OUT>
+perguntas_para_int = []
+for pergunta in perguntas_limpas:
+    ints = []
+    for palavra in pergunta.split():
+        if palavra not in perguntas_palavras_int:
+             ints.append(perguntas_palavras_int['<OUT>'])
+        else:
+            ints.append(perguntas_palavras_int[palavra])
+    perguntas_para_int.append(ints)
+
+respostas_para_int = []
+for resposta in respostas_limpas:
+    ints = []
+    for palavra in resposta.split():
+        if palavra not in respostas_palavras_int:
+             ints.append(respostas_palavras_int['<OUT>'])
+        else:
+            ints.append(respostas_palavras_int[palavra])
+    respostas_para_int.append(ints)
 
 
 
