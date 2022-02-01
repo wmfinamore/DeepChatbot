@@ -173,7 +173,16 @@ for tamanho in range(1, 25 + 1):
             respostas_limpas_ordenadas.append(respostas_para_int[i[0]])
 
 
-    
+# ------ Parte 2 --------Construção do modelo Seq2Seq -----
+# Criação de placeholder para as entradas e saídas
+def entradas_model():
+    entradas - tf.placeholder(tf.int32, [None, None], name='entradas')
+    saidas = tf.placeholder(tf.int32, [None, None], name='saidas')
+    lr = tf.placeholder(tf.float32, name='learning_rate')
+    keep_prob = tf.placeholder(tf.float32, name='keep_prob')
+    return entradas, saidas, lr, keep_prob
+
+
 
 
     
