@@ -189,7 +189,44 @@ def preprocessamento_saidas(saidas, palavra_para_int, batch_size):
     saidas_preprocessadas = tf.concat([esquerda, direita], 1)
     return saidas_preprocessadas
 
-    
+
+# Criação da camada RNN do codificador
+def rnn_codificador(rnn_entradas, rnn_tamanho, numero_camadas, keep_prob, tamanho_sequencia):
+    lstm = tf.contrib.rnn.LSTMCell(rnn_tamanho)
+    lstm_dropout = tf.contrib.rnn.DropoutWrapper(lstm, input_keep_prob = keep_prob)
+    encoder_celula = tf.contrib.rnn.MultiRNNCell([lstm_dropout] * numero_camadas)
+    # a função bidirectional_dynamic_rnn retorna dois valores. O primeiro não será usado
+    _, encoder_estado = tf.nn.bidirectional_dynamic_rnn(cell_fw = encoder_celula,
+                                                     cell_bw = encoder_celula,
+                                                     squence_lenght = tamanho_sequencia,
+                                                     inputs = rnn_entradas,
+                                                     dtype = tf.float32)
+    return encoder_estado
+
+
+# Decodificador da base de treinamento
+def decodifica_base_treinamento(encoder_estado, decodificador_celula,
+                                decodificador_embedded_entrada, tamanho_sequencia,
+                                decodificador_escopo, funcao_saida, 
+                                keep_prob, batch_size):
+    estados_atencao = tf.zeros([batch_size, 1, decodificador_celula.output_size])
+    attention_keys, attention_values, attention_score_function, attention_construct_function = \
+        tf.contrib.seq2seq.prepare_attention(estados_atencao,
+                                             attention_option = 'bahdanau',
+                                             num_units = decodificador_celula.output_size)
+    funcao_decodificador_treinamento = tf.contrib.seq2seq.attention_decoder_fn_train(encoder_estado[0],
+                                                                                     attention_keys,
+                                                                                     attention_values,
+                                                                                     attention_score_function,
+                                                                                     attention_construct_function,
+                                                                                     name = 'attn_dec_train')
+    decodificador_saida, _, _ = tf.contrib.seq2seq.dynamic_rnn_decoder(decodificador_celula,
+                                                                       funcao_decodificador_treinamento,
+                                                                       decodificador_embedded_entrada,
+                                                                       tamanho_sequencia,
+                                                                       scope = decodificador_escopo)
+    decodificador_saida_dropout = tf.nn.dropout(decodificador_saida, keep_prob)
+    return funcao_saida(decodificador_saida_dropout)
 
 
 
