@@ -229,6 +229,39 @@ def decodifica_base_treinamento(encoder_estado, decodificador_celula,
     return funcao_saida(decodificador_saida_dropout)
 
 
+# Decodificação da base de teste/validação
+def decodifica_base_teste(encoder_estado, decodificador_celula,
+                                decodificador_embedding_matrix, sos_id, eos_id, tamanho_maximo,
+                                numero_palavras, decodificador_escopo, funcao_saida,
+                                keep_prob, batch_size):
+    estados_atencao = tf.zeros([batch_size, 1, decodificador_celula.output_size])
+    attention_keys, attention_values, attention_score_function, attention_construct_function = \
+        tf.contrib.seq2seq.prepare_attention(estados_atencao,
+                                             attention_option = 'bahdanau',
+                                             num_units = decodificador_celula.output_size)
+    funcao_decodificador_teste = tf.contrib.seq2seq.attention_decoder_fn_inference(funcao_saida, 
+                                                                                     encoder_estado[0],
+                                                                                     attention_keys,
+                                                                                     attention_values,
+                                                                                     attention_score_function,
+                                                                                     attention_construct_function,
+                                                                                     decodificador_embedding_matrix,
+                                                                                     sos_id, 
+                                                                                     eos_id,
+                                                                                     tamanho_maximo,
+                                                                                     numero_palavras,
+                                                                                     name = 'attn_dec_inf')
+    previsoes_teste, _, _ = tf.contrib.seq2seq.dynamic_rnn_decoder(decodificador_celula,
+                                                                   funcao_decodificador_teste,
+                                                                   scope = decodificador_escopo
+                                                                   )
+    return previsoes_teste
+
+
+
+
+
+
 
     
 
