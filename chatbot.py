@@ -182,6 +182,14 @@ def entradas_model():
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
     return entradas, saidas, lr, keep_prob
 
+# Pré-processamento das saídas (alvos)
+def preprocessamento_saidas(saidas, palavra_para_int, batch_size):
+    esquerda = tf.fill([batch_size, 1], palavra_para_int['<SOS>'])
+    direita = tf.strided_slice(saidas, [0,0], [batch_size, -1], strides= [1,1])
+    saidas_preprocessadas = tf.concat([esquerda, direita], 1)
+    return saidas_preprocessadas
+
+    
 
 
 
