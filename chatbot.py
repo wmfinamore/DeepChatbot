@@ -294,6 +294,11 @@ def rnn_decodificador(decodificador_embedded_entrada, decodificador_embeddings_m
                                                 batch_size)
         return previsoes_treinamento, previsoes_teste
         
+# Criação do modelo Seq2Seq
+def modelo_seq2Seq(entradas, saidas, keep_prob, batch_size, tamanho_sequencia,
+                   numero_palavras_respostas, numero_palavras_perguntas,
+                   tamanho_codificador_embeddings, tamanho_decodificador_embeddings,
+                   rnn_tamanho, numero_camadas, perguntas_palavras_int):
     
     
     
