@@ -299,7 +299,29 @@ def modelo_seq2Seq(entradas, saidas, keep_prob, batch_size, tamanho_sequencia,
                    numero_palavras_respostas, numero_palavras_perguntas,
                    tamanho_codificador_embeddings, tamanho_decodificador_embeddings,
                    rnn_tamanho, numero_camadas, perguntas_palavras_int):
-    
+    codificador_embedded_entrada = tf.contrib.layers.embed_sequence(entradas,
+                                                                    numero_palavras_respostas + 1,
+                                                                    tamanho_codificador_embeddings,
+                                                                    initializer = tf.random_uniform_initializer(0,1))
+    codificador_estado = rnn_codificador(codificador_embedded_entrada,
+                                         rnn_tamanho, numero_camadas,
+                                         keep_prob, tamanho_sequencia)
+    saidas_preprocessadas = preprocessamento_saidas(saidas, perguntas_palavras_int, batch_size)
+    decodificador_embeddings_matrix = tf.Variable(tf.random_uniform([numero_palavras_perguntas + 1,
+                                                                     tamanho_decodificador_embeddings], 0, 1))
+    decodificador_embedded_entradas = tf.nn.embedding_lookup(decodificador_embeddings_matrix,
+                                                             saidas_preprocessadas)
+    previsoes_treinamento, previsoes_teste = rnn_decodificador(decodificador_embedded_entrada,
+                                                               decodificador_embeddings_matrix,
+                                                               codificador_estado,
+                                                               numero_palavras_perguntas,
+                                                               tamanho_sequencia,
+                                                               rnn_tamanho,
+                                                               numero_camadas,
+                                                               perguntas_palavras_int,
+                                                               keep_prob,
+                                                               batch_size)
+    return previsoes_treinamento, previsoes_teste
     
     
     
