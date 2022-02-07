@@ -345,6 +345,9 @@ session = tf.InteractiveSession()
 tf.disable_eager_execution()
 entradas, saidas, lr, keep_prob = entradas_modelo()
 
+# Configuração do tamanho da sequencia
+tamanho_sequencia = tf.placeholder_with_default(25, None, name = 'tamanho_sequencia')
+
 
     
     
