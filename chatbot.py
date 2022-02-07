@@ -2,7 +2,7 @@
 
 # Importação das bibliotecas
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import re
 import time
 
@@ -175,8 +175,8 @@ for tamanho in range(1, 25 + 1):
 
 # ------ Parte 2 --------Construção do modelo Seq2Seq -----
 # Criação de placeholder para as entradas e saídas
-def entradas_model():
-    entradas - tf.placeholder(tf.int32, [None, None], name='entradas')
+def entradas_modelo():
+    entradas = tf.placeholder(tf.int32, [None, None], name='entradas')
     saidas = tf.placeholder(tf.int32, [None, None], name='saidas')
     lr = tf.placeholder(tf.float32, name='learning_rate')
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
@@ -338,10 +338,12 @@ min_learning_rate = 0.0001
 probabilidade_dropout = 0.5
 
 # Definição da seção
-tf.compat.v1.reset_default_graph()
-session = tf.compat.v1.InteractiveSession()
+tf.reset_default_graph()
+session = tf.InteractiveSession()
 
-
+# Carregamento do modelo
+tf.disable_eager_execution()
+entradas, saidas, lr, keep_prob = entradas_modelo()
 
 
     
