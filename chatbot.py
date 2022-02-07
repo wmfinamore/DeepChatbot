@@ -323,6 +323,20 @@ def modelo_seq2Seq(entradas, saidas, keep_prob, batch_size, tamanho_sequencia,
                                                                batch_size)
     return previsoes_treinamento, previsoes_teste
     
+
+#-- Parte 3 - Treinamento do modelo Seq2Seq
+#Configuração dos hiperparâmetros
+epocas = 100
+batch_size = 64
+rnn_tamanho = 512
+numero_camadas = 3
+tamanho_codificador_embeddings = 512
+tamanho_decodificador_embeddings = 512
+learning_rate = 0.01
+learning_rate_decaimento = 0.9
+min_learning_rate = 0.0001
+probabilidade_dropout = 0.5
+
     
     
     
