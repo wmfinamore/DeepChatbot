@@ -299,7 +299,7 @@ def modelo_seq2Seq(entradas, saidas, keep_prob, batch_size, tamanho_sequencia,
                    numero_palavras_respostas, numero_palavras_perguntas,
                    tamanho_codificador_embeddings, tamanho_decodificador_embeddings,
                    rnn_tamanho, numero_camadas, perguntas_palavras_int):
-    codificador_embedded_entrada = tf.contrib.layers.embed_sequence(entradas,
+    codificador_embedded_entrada = tf.layers.embed_sequence(entradas,
                                                                     numero_palavras_respostas + 1,
                                                                     tamanho_codificador_embeddings,
                                                                     initializer = tf.random_uniform_initializer(0,1))
@@ -352,6 +352,19 @@ tamanho_sequencia = tf.placeholder_with_default(25, None, name = 'tamanho_sequen
 dimensao_entrada = tf.shape(entradas)
 
 
+# Obtenção das previsões de treinamento e teste
+previsoes_treinamento, previsoes_teste = modelo_seq2Seq(tf.reverse(entradas, [-1]),
+                                                        saidas,
+                                                        keep_prob,
+                                                        batch_size,
+                                                        tamanho_sequencia,
+                                                        len(respostas_palavras_int),
+                                                        len(perguntas_palavras_int),
+                                                        tamanho_codificador_embeddings,
+                                                        tamanho_decodificador_embeddings,
+                                                        rnn_tamanho,
+                                                        numero_camadas,
+                                                        perguntas_palavras_int)
     
     
 
